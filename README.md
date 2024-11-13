@@ -33,9 +33,28 @@ A Blank Document opens up into which the following source code can be typed down
 ## a)To Verify the Functionality using Test Bench
 
 ## Source Code – Using Case Statement :
-
-(Include program here)
-
+```
+`timescale 1ns / 1ns
+module alu_32bit_case(y,a,b,f);
+input [31:0]a;
+input [31:0]b;
+input [2:0]f;
+output reg [31:0]y;
+always@(*)
+begin
+case(f)
+3'b000:y=a&b; //AND Operation
+3'b001:y=a|b; //OR Operation
+3'b010:y=~(a&b); //NAND Operation
+3'b011:y=~(a|b); //NOR Operation
+3'b010:y=a+b; //Addition
+3'b011:y=a-b; //Subtraction
+3'b100:y=a*b; //Multiply
+default:y=32'bx;
+endcase
+end
+endmodule
+```
 Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
 
 ## Creating Test bench:
@@ -44,8 +63,26 @@ Similarly, create your test bench using gedit <filename_tb>.v or <filename_tb>.v
 
 ## Test Bench :
 
-(Include test bench program here)
-
+```
+module alu_32bit_tb_case;
+reg [31:0]a;
+reg [31:0]b;
+reg [2:0]f;
+alu 32bit_case test2(.y(y),.a(a),.b(b),.f(f));
+wire [31:0]y;
+initial
+begin
+a=32h00000000; b-32 hFFFFFFFF;
+#10 f-3'5000;
+#10 f-3 b001;
+#10 f=3'b010; #10 f=3'b011;
+#10 F-3'b100;
+#10 f=3b101;
+#10 f=3'b110;
+#10; $stop;
+end
+endmodule
+```
 Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
 
 ## Functional Simulation: 
@@ -59,6 +96,7 @@ source /cadence/install/cshrc (mention the path of the tools)
 (The path of cshrc could vary depending on the installation destination)
       
 After this you can see the window like below 
+![Screenshot 2024-11-13 174305](https://github.com/user-attachments/assets/8b2eac00-04ff-4910-b429-60ed0ad21234)
 
 ### Fig 2: Invoke the Cadence Environment
 
@@ -72,6 +110,7 @@ or
 
 
 It will invoke the nclaunch window for functional simulation we can compile,elaborate and simulate it using Multiple Step .
+![Screenshot 2024-11-13 174535](https://github.com/user-attachments/assets/8670a66e-5413-45a8-9288-0b15a43c638a)
 
 ### Fig 3: Setting Multi-step simulation
 
@@ -100,6 +139,7 @@ Left side you can see the HDL files. Right side of the window has worklib and sn
 Worklib is the directory where all the compiled codes are stored while Snapshot will have output of elaboration which in turn goes for simulation .
 
 To perform the function simulation, the following three steps are involved Compilation, Elaboration and Simulation. 
+![Screenshot 2024-10-29 134352](https://github.com/user-attachments/assets/ee6baf04-e54d-41fe-b822-01774c7c60fc)
 
 ### Fig 6: Nclaunch Window
 
@@ -142,6 +182,7 @@ To check the port connections in hierarchical design
 Inputs: Top level design / test bench Verilog codes 
 
 Outputs: Elaborate database updated in mapped library if successful, generates report else error reported in log file 
+![image](https://github.com/user-attachments/assets/0b13ff72-04c4-456e-93b8-74653cdbe830)
 
 ## 	Steps for elaboration 
 
@@ -158,8 +199,10 @@ Outputs: Elaborate database updated in mapped library if successful, generates r
 5.It also establishes net connectivity and prepares all of this for simulation
 
 After elaboration the file will come under snapshot. Select the test bench and simulate it.
+![image](https://github.com/user-attachments/assets/908f9c15-c52c-4991-823f-f2d36c7f6f50)
 
 ## Fig 8: Elaboration Launch Option
+![image](https://github.com/user-attachments/assets/8aa3c7b2-7591-4ee8-a307-89d76dae7b1a)
 
 ## Step 3: Simulation: 
 
@@ -174,10 +217,11 @@ Simulation allow to dump design and test bench signals into a waveform
 Steps for simulation – Run the simulation command with simulator options
 
 ## Fig 9: Design Browser window for simulation
+![image](https://github.com/user-attachments/assets/a70436ba-cc11-44de-a2a5-dea4e3b5b075)
 
 ## Fig 10:Simulation Waveform Window
+![image](https://github.com/user-attachments/assets/5c606786-23bc-49f1-885f-00555a0834d7)
 
-## Fig 11:Simulation Waveform Window
 
 
 
